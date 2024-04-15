@@ -70,10 +70,22 @@ async function getUsers(){
                     throw error;
                   }
             } 
-            async function CreateExpert_tags(id,expert_tags){
+            async function getExpert_tags(id){
+              try{
+              const [rows] = await pool.query(`SELECT * FROM UserExpertTags WHERE user_id = ? `, [id]);
+              return rows; 
+              }
+             
+                  catch (error) {
+                      console.error(error);
+                      throw error;
+                    }
+              }              
+         
+            async function CreateExpert_tags(id,tag_name){
                 try{
-                const [rows] = await pool.query(`INSERT INTO UserExpertTags (user_id ,tag) 
-                values(?,?) `,[id,tag])
+                const [rows] = await pool.query(`INSERT INTO UserExpertTags (user_id ,tag_name) 
+                values(?,?) `,[id,tag_name])
                 return rows; 
                 }
                
@@ -82,12 +94,35 @@ async function getUsers(){
                         throw error;
                       }
                 }              
-                                  
-                    
+                async function getIntrests(id){
+                  try{
+                  const [rows] = await pool.query(`SELECT * FROM UserExpertTags WHERE user_id = ? `, [id]);
+                  return rows; 
+                  }
+                 
+                      catch (error) {
+                          console.error(error);
+                          throw error;
+                        }
+                  }              
+             
+                async function CreateIntrests(id,tag_name){
+                    try{
+                    const [rows] = await pool.query(`INSERT INTO UserExpertTags (user_id ,tag_name) 
+                    values(?,?) `,[id,tag_name])
+                    return rows; 
+                    }
+                   
+                        catch (error) {
+                            console.error(error);
+                            throw error;
+                          }
+                    }              
+                         
     
 
 
     
-module.exports= {getUsers,getUser,createUser,updateUser,deleteUser,UpdateProfilePic,updateBio,CreateExpert_tags};
+module.exports= {getUsers,getUser,createUser,updateUser,deleteUser,UpdateProfilePic,updateBio,getExpert_tags,CreateExpert_tags};
 
     

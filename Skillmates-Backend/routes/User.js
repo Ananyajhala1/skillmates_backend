@@ -1,5 +1,5 @@
 const  express =require('express');
-const { getUsers, getUser, createUser, updateUser, deleteUser, UpdateProfilePic, updateBio, CreateExpert_tags } = require('../controllers/UserController.js');
+const { getUsers, getUser, createUser, updateUser, deleteUser, UpdateProfilePic, updateBio,getExpert_tags, CreateExpert_tags } = require('../controllers/UserController.js');
 
 
 const router = express.Router();
@@ -89,12 +89,25 @@ router.put('/:id/bio', async (req, res) => {
   }
 });
 
+// get all expert tags for a user
+router.get('/:id/expert_tags', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const expert_tags =await getExpert_tags(id);
+    res.json(expert_tags);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Create expert tags for a user by ID
+
 router.post('/:id/expert_tags', async (req, res) => {
   try {
     const { id } = req.params;
-    const { expert_tags } = req.body;
-    await CreateExpert_tags(id, expert_tags);
+    const {tag_name} = req.body;
+    await CreateExpert_tags(id,tag_name);
     res.status(201).send('Expert tags created');
   } catch (error) {
     console.error(error);
