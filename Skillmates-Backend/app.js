@@ -17,9 +17,11 @@ app.use(cors(corsOptions));
 
 // routes
 app.use('/users',require('./routes/User'));
+app.use('/users',require('./routes/roadmap'));
 app.use('/projects', require('./routes/Project'));
 app.use('/posts', require('./routes/Post'));
 app.use('/connections', require('./routes/UserConnetions'));
+app.use('/hackathons', require('./routes/hackathon'));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
