@@ -3,9 +3,9 @@ const router = express.Router();
 const hackathonTeamController = require('../controllers/hackathonTeamController');
 
 router.post('/', async (req, res) => {
-    const { name, hackathonName, description, createdBy, createdAt } = req.body;
+    const { team_name, hackathon_name, description, created_by, created_at } = req.body;
     try {
-        const teamId = await hackathonTeamController.createHackathonTeam(name, hackathonName, description, createdBy, createdAt);
+        const teamId = await hackathonTeamController.createHackathonTeam(team_name, hackathon_name, description, created_by, created_at);
         res.status(201).json({ teamId });
     } catch (error) {
         console.error(error);
@@ -26,9 +26,9 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const teamId = req.params.id;
-    const { name, description } = req.body;
+    const { team_name, description } = req.body;
     try {
-        await hackathonTeamController.updateHackathonTeam(teamId, name, description);
+        await hackathonTeamController.updateHackathonTeam(teamId, team_name, description);
         res.send('Hackathon team details updated successfully');
     } catch (error) {
         console.error(error);

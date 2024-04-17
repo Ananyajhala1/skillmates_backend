@@ -22,6 +22,7 @@ app.use('/projects', require('./routes/Project'));
 app.use('/posts', require('./routes/Post'));
 app.use('/connections', require('./routes/UserConnetions'));
 app.use('/hackathons', require('./routes/hackathon'));
+app.use('/collabprojects', require('./routes/collabproject'));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
