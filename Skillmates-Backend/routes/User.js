@@ -29,8 +29,8 @@ router.get('/:id', async (req, res) => {
 // Create a new user
 router.post('/', async (req, res) => {
   try {
-    const { username, password, github_username, email } = req.body;
-    await createUser(username, password, github_username, email);
+    const { username, password, github_username, email , profilePicture} = req.body;
+    await createUser(username, password, github_username, email,profilePicture);
     res.status(201).send('User created');
   } catch (error) {
     console.error(error);
