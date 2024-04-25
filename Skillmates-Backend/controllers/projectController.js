@@ -16,9 +16,9 @@ async function getProjects(){
     // const User = await getUser(1);
     // console.log(User);
     
-    async function createProject(created_by,title,description,created_at,github_repository,tech_stack_tags) {
-        const [rows] = await pool.query(`INSERT INTO Project (created_by,title,description,created_at,github_repository,tech_stack_tags)
-                                          values(?,?,?,?,?,?,?) `,[created_by,title,description,created_at,github_repository,tech_stack_tags])
+    async function createProject(created_by,title,description,created_at,github_repository) {
+        const [rows] = await pool.query(`INSERT INTO Project (created_by,title,description,created_at,github_repository)
+                                          values(?,?,?,?,?) `,[created_by,title,description,created_at,github_repository])
         return rows;               
     }
 

@@ -29,7 +29,10 @@ router.get('/:id', async (req, res) => {
 // Create a new user
 router.post('/', async (req, res) => {
   try {
+    console.log("hi");
     const {description,title,image,created_by } = req.body;
+    console.log(req.body);
+    // console.log(description);
     await createPost(description,title,image,created_by);
     res.status(201).send('Post created');
   } catch (error) {

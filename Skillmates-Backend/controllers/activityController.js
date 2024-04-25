@@ -18,7 +18,7 @@ const  pool = require( '../database.js');
         LEFT JOIN HackathonTeams ht ON uht.team_id = ht.team_id
         LEFT JOIN Posts po ON u.user_id = po.created_by
         GROUP BY u.user_id
-        ORDER BY (projects_involved + study_groups_involved + hackathon_teams_involved + posts_created) DESC;
+        ORDER BY (projects_involved + study_groups_involved + hackathon_teams_involved + posts_created) DESC limit 3;
     `, );
         return rows; 
         }

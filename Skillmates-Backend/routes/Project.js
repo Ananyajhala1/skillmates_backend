@@ -29,8 +29,8 @@ router.get('/:id', async (req, res) => {
 // Create a new user
 router.post('/', async (req, res) => {
   try {
-    const {user_id,title,description,created_at,github_repository,tech_stack_tags } = req.body;
-    await createProject(user_id,title,description,created_at,github_repository,tech_stack_tags );
+    const {created_by,title,description,created_at,github_repository } = req.body;
+    await createProject(created_by,title,description,created_at,github_repository );
     res.status(201).send('Project created');
   } catch (error) {
     console.error(error);

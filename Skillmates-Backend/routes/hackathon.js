@@ -13,6 +13,16 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const teams = await hackathonTeamController.getAllHackathonTeams();
+        res.json(teams);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get('/:id', async (req, res) => {
     const teamId = req.params.id;
     try {

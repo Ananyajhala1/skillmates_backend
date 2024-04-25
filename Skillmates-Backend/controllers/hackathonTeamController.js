@@ -9,6 +9,15 @@ async function createHackathonTeam(name, hackathonName, description, createdBy, 
     }
 }
 
+async function getAllHackathonTeams() {
+    try {
+        const [teams] = await pool.query('SELECT * FROM HackathonTeams');
+        return teams;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getHackathonTeamById(id) {
     try {
         const [result] = await pool.query('SELECT * FROM HackathonTeams WHERE team_id = ?', [id]);
@@ -61,6 +70,7 @@ async function removeMemberFromHackathonTeam(userId, teamId) {
 
 module.exports = {
     createHackathonTeam,
+    getAllHackathonTeams,
     getHackathonTeamById,
     updateHackathonTeam,
     deleteHackathonTeam,
