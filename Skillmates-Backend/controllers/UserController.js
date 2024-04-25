@@ -8,10 +8,6 @@ const { MongoClient, GridFSBucket } = require('mongodb');
 const axios = require('axios');
 
 
-
-
-
-
 async function getUsers(){
     const result = await pool.query("SELECT * from User");
     const [rows] =result;
@@ -38,45 +34,46 @@ async function getUsers(){
 async function createUser(username, password, github_username, email, profilePicture) {
     try {
         // Connect to MongoDB
-        const uri = process.env.MONGO_URI;
-        const client = new MongoClient(uri);
-        await client.connect();
-        const database = client.db('test');
+        console.log("hi");
+        // const uri = process.env.MONGO_URI;
+        // const client = new MongoClient(uri);
+        // await client.connect();
+        // const database = client.db('test');
 
-        // Obtain GridFSBucket object
-        const bucket = new GridFSBucket(database);
+        // // Obtain GridFSBucket object
+        // const bucket = new GridFSBucket(database);
 
-        // Download the profile picture from the provided URL
-        const response = await axios.get(profilePicture.url, { responseType: 'arraybuffer' });
-        const imageBuffer = Buffer.from(response.data);
+        // // Download the profile picture from the provided URL
+        // const response = await axios.get(profilePicture.url, { responseType: 'arraybuffer' });
+        // const imageBuffer = Buffer.from(response.data);
 
-        // Upload the profile picture to MongoDB using GridFS
-        const uploadStream = bucket.openUploadStream(profilePicture.name);
-        uploadStream.end(imageBuffer);
+        // // Upload the profile picture to MongoDB using GridFS
+        // const uploadStream = bucket.openUploadStream(profilePicture.name);
+        // uploadStream.end(imageBuffer);
 
-        await new Promise((resolve, reject) => {
-            uploadStream.on('error', (error) => {
-                console.error('Error uploading profile picture to MongoDB:', error);
-                reject(new Error('Failed to save profile picture'));
-            });
+        // await new Promise((resolve, reject) => {
+        //     uploadStream.on('error', (error) => {
+        //         console.error('Error uploading profile picture to MongoDB:', error);
+        //         reject(new Error('Failed to save profile picture'));
+        //     });
 
-            uploadStream.on('finish', () => {
-                resolve();
-            });
-        });
+        //     uploadStream.on('finish', () => {
+        //         resolve();
+        //     });
+        // });
 
-        // Insert user information into your MySQL database
+        // // Insert user information into your MySQL database
         
 
         const [rows] = await pool.query(`
-            INSERT INTO User (username, password, github_username, email, profile_pic)
-            VALUES (?, ?, ?, ?, ?)`, [username, password, github_username, email, profilePicture.name]);
+            INSERT INTO User (username, github_username, email)
+            VALUES (?, ?, ?)`, [username, github_username, email]);
           
         // Close the MySQL pool
         await pool.end();
 
         // Close the MongoDB client
-        await client.close();
+        // await client.close();
 
         console.log('User created successfully');
     } catch (error) {
