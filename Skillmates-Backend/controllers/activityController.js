@@ -28,9 +28,49 @@ const  pool = require( '../database.js');
                 throw error;
               }
         }     
-   
-
-        module.exports = {
-     getMostActiveUser
-        };
         
+        async function getMostPopularProject(){
+            try{
+                const [rows] = await pool.query(`
+                SELECT p.title, COUNT(usg.user_id) AS num_users_involved
+                FROM Project p
+                JOIN UserStudyGroups usg ON p.project_id = usg.group_id
+                GROUP BY p.title
+                ORDER BY num_users_involved DESC
+                LIMIT 1;
+            `, );
+                return rows; 
+                }
+               
+                    catch (error) {
+                        console.error(error);
+                        throw error;
+                      }
+                }  
+                
+                async function getMostPopularStudyGroup(){
+                    try{
+                        const [rows] = await pool.query(`
+                        SELECT sg.group_name, COUNT(usg.user_id) AS num_users_involved
+                        FROM StudyGroups sg
+                        JOIN UserStudyGroups usg ON sg.group_id = usg.group_id
+                        GROUP BY sg.group_name
+                        ORDER BY num_users_involved DESC
+                        LIMIT 1;
+                    `, );
+                        return rows; 
+                        }
+                       
+                            catch (error) {
+                                console.error(error);
+                                throw error;
+                              }
+                        }                  
+           
+                module.exports = {
+                    getMostActiveUser,
+                    getMostPopularProject,
+                    getMostPopularStudyGroup
+
+                       };      
+               
